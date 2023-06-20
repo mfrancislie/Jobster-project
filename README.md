@@ -44,3 +44,31 @@ npx create-react-app@latest myApp
 - change title in public/index.html
 - replace favicon.ico in public
 - resource [Generate Favicons](https://favicon.io/)
+
+#### 3) Create Landing page - Structure
+
+- create folder assets/css/images
+- create pages folder
+- create LandingPage.js component
+- import logo.svg and main.svg
+- export const LandingPage = () => {
+  return (
+  <main>
+  <nav>
+  <img src={logo} alt='jobster logo' className='logo' />
+  </nav>
+  <div className='container page'>
+  {/_ info _/}
+  <div className='info'>
+  <h1>
+  job <span>tracking</span> app
+  </h1>
+  <p>some text</p>
+  <button className='btn btn-hero'>Login/Register</button>
+  </div>
+  <img src={main} alt='job hunt' className='img main-img' />
+  </div>
+  </main>
+  );
+  }; 
+  - import LandingPage to app.js
