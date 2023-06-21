@@ -72,3 +72,8 @@ npx create-react-app@latest myApp
   );
   }; 
   - import LandingPage to app.js
+
+  #### 4) Create wrappers folder
+
+  - assets/wrappers
+  - only responsible for styling
