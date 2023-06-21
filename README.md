@@ -77,3 +77,19 @@ npx create-react-app@latest myApp
 
   - assets/wrappers
   - only responsible for styling
+
+  #### 5) Create logo component
+
+  - logo built in Figma
+  - [Cool Images](https://undraw.co/)
+
+  - create components folder in source
+  - create Logo.js
+  - move import and image logic
+  - export as default
+  - utilize index.js
+  - import logo from '../assets/images/logo.svg';
+
+    const Logo = () => {
+    return <img src={logo} alt='jobify' className='logo' />;
+    };
