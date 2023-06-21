@@ -93,3 +93,13 @@ npx create-react-app@latest myApp
     const Logo = () => {
     return <img src={logo} alt='jobify' className='logo' />;
     };
+
+    #### 6) Setup pages
+
+    - create Error, Register, Dashboard pages
+    - basic return
+    - create index.js
+    - import all the pages
+    - export one by one
+    - basically the same, as in components
+    - import App.js
