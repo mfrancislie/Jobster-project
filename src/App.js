@@ -1,4 +1,4 @@
-import LandingPage from './pages/LandingPage';
+import { LandingPage, DashBoardPage, ErrorPage, RegisterPage } from './pages';
 
 function App() {
   return (
