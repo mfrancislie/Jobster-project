@@ -2,6 +2,7 @@ import React from 'react';
 import main from '../assets/images/main.svg';
 import Wrapper from '../assets/wrappers/LandingPage';
 import { Logo } from '../components';
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
   return (
@@ -22,7 +23,9 @@ const LandingPage = () => {
             access all information and activities related to your job search and
             manage multiple job applications all in one central place.
           </p>
-          <button className="btn btn-hero">Login/Register</button>
+          <Link to="/register" className="btn btn-hero">
+            Login/Register
+          </Link>
         </div>
         <img src={main} alt="job hunt" className="img main-img" />
       </div>

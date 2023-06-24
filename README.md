@@ -103,3 +103,35 @@ npx create-react-app@latest myApp
     - export one by one
     - basically the same, as in components
     - import App.js
+
+    #### 7) React-router-setup
+
+    - Please reference react-router 6 section
+    - Visit React Router Docs
+    - npm install react-router-dom@6
+    - import three components from react-router-dom
+
+    import { BrowserRouter, Routes, Route } from 'react-router-dom';
+    import { Error, Landing, Register, Dashboard } from './pages';
+
+    function App() {
+    return (
+    <BrowserRouter>
+    <Routes>
+    <Route path='/' element={<Dashboard />} />
+    <Route path='landing' element={<Landing />} />
+    <Route path='register' element={<Register />} />
+    <Route path='\*' element={<Error />} />
+    </Routes>
+    </BrowserRouter>
+    );
+    }
+
+  - Go to Landing.js
+    import { Link } from 'react-router-dom';
+
+  return (
+    <Link to='/register' className='btn btn-hero'>
+      Login / Register
+    </Link>
+  );
