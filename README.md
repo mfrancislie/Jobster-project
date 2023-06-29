@@ -63,7 +63,7 @@ npx create-react-app@latest myApp
 - import logo.svg and main.svg
 - import Landing in App.js and render
 
-##### 4) Landing Page - Structure
+##### 4) Create Landing Page - Structure
 
 - Landing.js
 
@@ -135,7 +135,7 @@ const Component = () => {
 };
 ```
 
-#### 7) Wrappers
+#### 7) Create Wrappers folder
 
 - assets/wrappers
 - only responsible for styling
@@ -145,7 +145,7 @@ const Component = () => {
 - logo built in Figma
 - [Cool Images](https://undraw.co/)
 
-#### 9) Logo Component
+#### 9) Create Logo Component
 
 - create <b>components</b> folder in source
 - create Logo.js
@@ -217,7 +217,7 @@ return (
 );
 ```
 
-#### 12) Error Page
+#### 12) Error Page - setup
 
 ```js
 import { Link } from 'react-router-dom';
@@ -235,3 +235,12 @@ return (
   </Wrapper>
 );
 ```
+
+#### 15) Auto Imports
+
+- use while developing
+- only sparingly while recording
+- better picture
+- messes with flow
+- just my preference
+- still use them, just not all the time
