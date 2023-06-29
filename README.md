@@ -321,7 +321,7 @@ const root = createRoot(container);
 root.render(<App tab="home" />);
 ```
 
-#### 18) FormRow Component
+#### 18) Create FormRow Component
 
 - create FormRow.js in <b>components</b>
 - setup import/export
@@ -348,4 +348,42 @@ const FormRow = ({ type, name, value, handleChange, labelText }) => {
 };
 
 export default FormRow;
+```
+
+#### 19) add Toggle Member to register page
+
+```js
+const toggleMember = () => {
+  setValues({ ...values, isMember: !values.isMember });
+};
+
+return (
+  <Wrapper>
+    {/* control h3 */}
+
+    <h3>{values.isMember ? 'Login' : 'Register'}</h3>
+
+    {/* toggle name */}
+
+    {!values.isMember && (
+      <FormRow
+        type="text"
+        name="name"
+        value={values.name}
+        handleChange={handleChange}
+      />
+    )}
+
+    {/* right after submit btn */}
+    {/* toggle button */}
+
+    <p>
+      {values.isMember ? 'Not a member yet?' : 'Already a member?'}
+
+      <button type="button" onClick={toggleMember} className="member-btn">
+        {values.isMember ? 'Register' : 'Login'}
+      </button>
+    </p>
+  </Wrapper>
+);
 ```
