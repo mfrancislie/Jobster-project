@@ -387,3 +387,27 @@ return (
   </Wrapper>
 );
 ```
+
+#### 20) Handle Change and Empty Values
+
+[Dynamic Object Keys](https://youtu.be/_qxCYtWm0tw)
+
+Register.js
+
+```js
+const handleChange = (e) => {
+  const name = e.target.name;
+  const value = e.target.value;
+  console.log(`${name}:${value}`);
+  setValues({ ...values, [name]: value });
+};
+
+const onSubmit = (e) => {
+  e.preventDefault();
+  const { name, email, password, isMember } = values;
+  if (!email || !password || (!isMember && !name)) {
+    console.log('Please Fill Out All Fields');
+    return;
+  }
+};
+```
