@@ -13,12 +13,19 @@ const RegisterPage = () => {
   const [values, setValues] = useState(initialState);
 
   const handleChange = (e) => {
-    console.log(e.target);
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(`${name}:${value}`);
+    setValues({ ...values, [name]: value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    const { name, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !name)) {
+      console.log('Please Fill Out All Fields');
+      return;
+    }
   };
 
   const toggleMember = () => {
