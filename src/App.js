@@ -7,6 +7,7 @@ import {
   SharedLayoutPage,
   AddJobPage,
   AllJobsPage,
+  StatsPage,
 } from './pages/dashboard';
 
 function App() {
@@ -16,8 +17,9 @@ function App() {
       <Routes>
         <Route path="/" element={<SharedLayoutPage />}>
           <Route path="add-Job" element={<AddJobPage />} />
-          <Route path="all-Job" element={<AllJobsPage />} />
+          <Route path="all-Jobs" element={<AllJobsPage />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="stats" element={<StatsPage />} />
         </Route>
         <Route path="landing" element={<LandingPage />} />
         <Route path="register" element={<RegisterPage />} />
