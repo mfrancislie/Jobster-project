@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Logo } from '../components';
 import Wrapper from '../assets/wrappers/RegisterPage';
 import FormRow from '../components/FormRow';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, registerUser } from '../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const initialState = {
     name: '',
@@ -41,6 +43,14 @@ const RegisterPage = () => {
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
   };
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 3000);
+    }
+  }, [user, navigate]);
 
   return (
     <Wrapper className="full-page">
