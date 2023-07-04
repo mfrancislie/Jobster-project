@@ -499,11 +499,79 @@ import { Provider } from 'react-redux';
 
 root.render(
   <Provider store={store}>
-    <App tab='home' />
+    <App tab="home" />
   </Provider>
 );
 ```
 
 ```sh
 npm install @reduxjs/toolkit react-redux
+```
+
+#### 23) RegisterUser, LoginUser - Placeholders
+
+- userSlice.js
+
+```js
+export const registerUser = createAsyncThunk(
+  'user/registerUser',
+  async (user, thunkAPI) => {
+    console.log(`Register User : ${user}`);
+  }
+);
+export const loginUser = createAsyncThunk(
+  'user/loginUser',
+  async (user, thunkAPI) => {
+    console.log(`Login User : ${user}`);
+  }
+);
+```
+
+- Register.js
+
+```js
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser, registerUser } from '../features/user/userSlice';
+
+
+const Register = () => {
+  const dispatch = useDispatch();
+  const { isLoading, user } = useSelector((store) => store.user);
+
+
+const onSubmit = (e) => {
+    e.preventDefault();
+    const { name, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !name)) {
+      toast.error('Please Fill Out All Fields');
+      return;
+    }
+    if (isMember) {
+      dispatch(loginUser({ email: email, password: password }));
+      return;
+    }
+    dispatch(registerUser({ name, email, password }));
+  };
+```
+
+#### 24) HTTP Methods
+
+- GET - get resources from the server
+- POST - submit resource to the server
+- PUT/PATCH - modify resource on the server
+- DELETE - delete resource form the server
+
+```js
+// GET
+axios.get(url, options);
+// POST
+axios.post(url, resource, options);
+// PATCH
+axios.patch(url, resource, options);
+// DELETE
+axios.delete(url, options);
+```
+
+```sh
+npm install axios
 ```
