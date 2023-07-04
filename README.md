@@ -533,25 +533,23 @@ export const loginUser = createAsyncThunk(
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, registerUser } from '../features/user/userSlice';
 
-
 const Register = () => {
   const dispatch = useDispatch();
   const { isLoading, user } = useSelector((store) => store.user);
-
-
+};
 const onSubmit = (e) => {
-    e.preventDefault();
-    const { name, email, password, isMember } = values;
-    if (!email || !password || (!isMember && !name)) {
-      toast.error('Please Fill Out All Fields');
-      return;
-    }
-    if (isMember) {
-      dispatch(loginUser({ email: email, password: password }));
-      return;
-    }
-    dispatch(registerUser({ name, email, password }));
-  };
+  e.preventDefault();
+  const { name, email, password, isMember } = values;
+  if (!email || !password || (!isMember && !name)) {
+    toast.error('Please Fill Out All Fields');
+    return;
+  }
+  if (isMember) {
+    dispatch(loginUser({ email: email, password: password }));
+    return;
+  }
+  dispatch(registerUser({ name, email, password }));
+};
 ```
 
 #### 24) HTTP Methods
@@ -572,13 +570,12 @@ axios.patch(url, resource, options);
 axios.delete(url, options);
 ```
 
-
 ```sh
 npm install axios
 ```
 
-25) API
-Root URL
+25. API
+    Root URL
 
 https://jobify-prod.herokuapp.com/api/v1/toolkit
 
@@ -605,3 +602,35 @@ Update USER
 PATCH /auth/updateUser
 { email:'john@gmail.com', name:'john', lastName:'smith', location:'my location' }
 sends back the user object with token
+
+#### 26) Custom Axios Instance
+
+- utils/axios.js
+
+```js
+import axios from 'axios';
+
+const customFetch = axios.create({
+  baseURL: 'https://jobify-prod.herokuapp.com/api/v1/toolkit',
+});
+
+export default customFetch;
+```
+
+userSlice.js
+
+```js
+import customFetch from '../../utils/axios';
+
+export const registerUser = createAsyncThunk(
+  'user/registerUser',
+  async (user, thunkAPI) => {
+    try {
+      const resp = await customFetch.post('/auth/testingRegister', user);
+      console.log(resp);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+);
+```
