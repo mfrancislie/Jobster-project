@@ -533,25 +533,23 @@ export const loginUser = createAsyncThunk(
 import { useSelector, useDispatch } from 'react-redux';
 import { loginUser, registerUser } from '../features/user/userSlice';
 
-
 const Register = () => {
   const dispatch = useDispatch();
   const { isLoading, user } = useSelector((store) => store.user);
-
-
+};
 const onSubmit = (e) => {
-    e.preventDefault();
-    const { name, email, password, isMember } = values;
-    if (!email || !password || (!isMember && !name)) {
-      toast.error('Please Fill Out All Fields');
-      return;
-    }
-    if (isMember) {
-      dispatch(loginUser({ email: email, password: password }));
-      return;
-    }
-    dispatch(registerUser({ name, email, password }));
-  };
+  e.preventDefault();
+  const { name, email, password, isMember } = values;
+  if (!email || !password || (!isMember && !name)) {
+    toast.error('Please Fill Out All Fields');
+    return;
+  }
+  if (isMember) {
+    dispatch(loginUser({ email: email, password: password }));
+    return;
+  }
+  dispatch(registerUser({ name, email, password }));
+};
 ```
 
 #### 24) HTTP Methods
@@ -572,13 +570,12 @@ axios.patch(url, resource, options);
 axios.delete(url, options);
 ```
 
-
 ```sh
 npm install axios
 ```
 
-25) API
-Root URL
+25. API
+    Root URL
 
 https://jobify-prod.herokuapp.com/api/v1/toolkit
 
@@ -597,11 +594,135 @@ Register USER - TESTING()
 POST /auth/testingRegister
 {name:'john',email:'john@gmail.com',password:'secret'}
 sends back the user object with token
+
 Login USER
 POST /auth/login
 {email:'john@gmail.com',password:'secret'}
 sends back the user object with token
+
 Update USER
 PATCH /auth/updateUser
 { email:'john@gmail.com', name:'john', lastName:'smith', location:'my location' }
 sends back the user object with token
+
+#### 26) Custom Axios Instance
+
+- utils/axios.js
+
+```js
+import axios from 'axios';
+
+const customFetch = axios.create({
+  baseURL: 'https://jobify-prod.herokuapp.com/api/v1/toolkit',
+});
+
+export default customFetch;
+```
+
+userSlice.js
+
+```js
+import customFetch from '../../utils/axios';
+
+export const registerUser = createAsyncThunk(
+  'user/registerUser',
+  async (user, thunkAPI) => {
+    try {
+      const resp = await customFetch.post('/auth/testingRegister', user);
+      console.log(resp);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+);
+```
+
+#### 27) Register User
+
+userSlice.js
+
+```js
+export const registerUser = createAsyncThunk(
+  'user/registerUser',
+  async (user, thunkAPI) => {
+    try {
+      const resp = await customFetch.post('/auth/register', user);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+)
+   extraReducers: {
+    [registerUser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [registerUser.fulfilled]: (state, { payload }) => {
+      const { user } = payload;
+      state.isLoading = false;
+      state.user = user;
+      toast.success(`Hello There ${user.name}`);
+    },
+    [registerUser.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    }
+  }
+
+```
+
+#### Extra Reducers "Builder Callback" Notation
+
+```js
+extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, { payload }) => {
+        const { user } = payload;
+        state.isLoading = false;
+        state.user = user;
+        addUserToLocalStorage(user);
+        toast.success(`Hello There ${user.name}`);
+      })
+      .addCase(registerUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, { payload }) => {
+        const { user } = payload;
+        state.isLoading = false;
+        state.user = user;
+        addUserToLocalStorage(user);
+
+        toast.success(`Welcome Back ${user.name}`);
+      })
+      .addCase(loginUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        const { user } = payload;
+        state.isLoading = false;
+        state.user = user;
+        addUserToLocalStorage(user);
+
+        toast.success(`User Updated!`);
+      })
+      .addCase(updateUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      })
+      .addCase(clearStore.rejected, () => {
+        toast.error('There was an error..');
+      });
+  },
+
+```
