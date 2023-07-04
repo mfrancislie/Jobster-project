@@ -901,3 +901,7 @@ const SharedLayout = () => {
 
 export default SharedLayout;
 ```
+
+#### 33) Shared Layout CSS
+
+- import Wrappers in components BigSidebar,SmallSidebar and Navbar
