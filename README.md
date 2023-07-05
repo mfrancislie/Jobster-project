@@ -1076,8 +1076,8 @@ import { toggleSidebar, logoutUser } from '../features/user/userSlice';
 
 <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
   <button
-    type='button'
-    className='dropdown-btn'
+    type="button"
+    className="dropdown-btn"
     onClick={() => {
       dispatch(logoutUser());
     }}
@@ -1085,4 +1085,37 @@ import { toggleSidebar, logoutUser } from '../features/user/userSlice';
     logout
   </button>
 </div>;
+```
+
+#### 39) Restrict Access
+
+- pages/ProtectedRoute.js
+
+```js
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+const ProtectedRoute = ({ children }) => {
+  const { user } = useSelector((store) => store.user);
+  if (!user) {
+    return <Navigate to="/landing" />;
+  }
+  return children;
+};
+
+export default ProtectedRoute;
+```
+
+App.js
+
+```js
+<Route
+  path="/"
+  element={
+    <ProtectedRoute>
+      <SharedLayout />
+    </ProtectedRoute>
+  }
+>
+  ...
+</Route>
 ```
