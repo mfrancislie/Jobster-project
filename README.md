@@ -1048,3 +1048,41 @@ const [showLogout, setShowLogout] = useState(false)
 </div>
 
 ```
+
+#### 38) Logout User
+
+userSlice.js
+
+```js
+reducers: {
+    logoutUser: (state) => {
+      state.user = null;
+      state.isSidebarOpen = false;
+      removeUserFromLocalStorage();
+    },
+    toggleSidebar: (state) => {
+      state.isSidebarOpen = !state.isSidebarOpen;
+    },
+  },
+
+export const { logoutUser, toggleSidebar } = userSlice.actions;
+
+```
+
+Navbar.js
+
+```js
+import { toggleSidebar, logoutUser } from '../features/user/userSlice';
+
+<div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
+  <button
+    type='button'
+    className='dropdown-btn'
+    onClick={() => {
+      dispatch(logoutUser());
+    }}
+  >
+    logout
+  </button>
+</div>;
+```
