@@ -1215,3 +1215,50 @@ const links = [
 
 export default links;
 ```
+
+#### 43) Small Sidebar - Nav Links
+
+SmallSidebar.js
+
+```js
+import { NavLink } from 'react-router-dom';
+
+return (
+  <div className="nav-links">
+    {links.map((link) => {
+      const { text, path, id, icon } = link;
+
+      return (
+        <NavLink
+          to={path}
+          className={({ isActive }) =>
+            isActive ? 'nav-link active' : 'nav-link'
+          }
+          key={id}
+          onClick={toggle}
+        >
+          <span className="icon">{icon}</span>
+          {text}
+        </NavLink>
+      );
+    })}
+  </div>
+);
+```
+
+#### REACT ROUTER UPDATE !!!
+
+- [Stack Overflow](https://stackoverflow.com/questions/70644361/react-router-dom-v6-shows-active-for-index-as-well-as-other-subroutes)
+
+```js
+<NavLink
+to={path}
+key={id}
+onClick={toggleSidebar}
+className={({ isActive }) =>
+isActive ? 'nav-link active' : 'nav-link'}
+
+
+end
+>
+```
