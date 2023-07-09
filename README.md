@@ -1262,3 +1262,48 @@ isActive ? 'nav-link active' : 'nav-link'}
 end
 >
 ```
+
+#### 44) Nav Links Component
+
+- create components/NavLinks.js
+- styles still set from Wrapper
+- also can setup in links.js, preference
+
+```js
+import { NavLink } from 'react-router-dom';
+import links from '../utils/links';
+
+const NavLinks = ({ toggleSidebar }) => {
+  return (
+    <div className="nav-links">
+      {links.map((link) => {
+        const { text, path, id, icon } = link;
+
+        return (
+          <NavLink
+            to={path}
+            key={id}
+            onClick={toggleSidebar}
+            className={({ isActive }) =>
+              isActive ? 'nav-link active' : 'nav-link'
+            }
+          >
+            <span className="icon">{icon}</span>
+            {text}
+          </NavLink>
+        );
+      })}
+    </div>
+  );
+};
+
+export default NavLinks;
+```
+
+```js
+SmallSidebar.js;
+
+import NavLinks from './NavLinks';
+
+return <NavLinks toggleSidebar={toggle} />;
+```
