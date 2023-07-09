@@ -1419,3 +1419,69 @@ const handleChange = (e) =>{
 };
 
 export default Profile;
+
+```
+
+#### 47) Update User - Complete
+
+###### Update USER
+
+- PATCH /auth/updateUser
+- { email:'ken1@gmail.com', name:'ken', lastName:'momo', location:'my location' }
+- authorization header : 'Bearer token'
+- sends back the user object with token
+
+userSlice.js
+
+```js
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (user, thunkAPI) => {
+    try {
+      const resp = await customFetch.patch('/auth/updateUser', user, {
+        headers: {
+          authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
+        },
+      });
+      return resp.data;
+    } catch (error) {
+      console.log(error.response);
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+// extra reducers
+     .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        const { user } = payload;
+        state.isLoading = false;
+        state.user = user;
+        addUserToLocalStorage(user);
+        toast.success('User Updated');
+      })
+
+      .addCase(updateUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      });
+```
+
+Profile.js
+
+```js
+import { updateUser } from '../../features/user/userSlice';
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const { name, email, lastName, location } = userData;
+
+  if (!name || !email || !lastName || !location) {
+    toast.error('Please Fill Out All Fields');
+    return;
+  }
+  dispatch(updateUser({ name, email, lastName, location }));
+};
+```
