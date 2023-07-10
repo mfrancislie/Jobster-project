@@ -1739,3 +1739,83 @@ const AddJob = () => {
 
 export default AddJob;
 ```
+
+#### 52) FormRowSelect
+
+```js
+// job status
+
+return (
+  <div className="form-row">
+    <label htmlFor="status" className="form-label">
+      status
+    </label>
+    <select
+      name="status"
+      value={status}
+      onChange={handleJobInput}
+      className="form-select"
+    >
+      {statusOptions.map((itemValue, index) => {
+        return (
+          <option key={index} value={itemValue}>
+            {itemValue}
+          </option>
+        );
+      })}
+    </select>
+  </div>
+);
+```
+
+- FormRowSelect.js
+
+```js
+const FormRowSelect = ({ labelText, name, value, handleChange, list }) => {
+  return (
+    <div className="form-row">
+      <label htmlFor={name} className="form-label">
+        {labelText || name}
+      </label>
+      <select
+        name={name}
+        value={value}
+        id={name}
+        onChange={handleChange}
+        className="form-select"
+      >
+        {list.map((itemValue, index) => {
+          return (
+            <option key={index} value={itemValue}>
+              {itemValue}
+            </option>
+          );
+        })}
+      </select>
+    </div>
+  );
+};
+
+export default FormRowSelect;
+```
+
+AddJob.js
+
+```js
+
+  /* job status */
+<FormRowSelect
+  name='status'
+  value={status}
+  handleChange={handleJobInput}
+  list={statusOptions}
+/>
+
+<FormRowSelect
+  name='jobType'
+  labelText='job type'
+  value={jobType}
+  handleChange={handleJobInput}
+  list={jobTypeOptions}
+/>
+```
