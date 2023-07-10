@@ -1844,3 +1844,36 @@ const handleJobInput = (e) => {
   dispatch(handleChange({ name, value }));
 };
 ```
+
+#### 54) User Slice - ClearValues Reducer
+
+```js
+
+    // reducers
+    clearValues: () => {
+      return {
+        ...initialState
+      };
+      return initialState
+    },
+
+export const { handleChange, clearValues } = jobSlice.actions;
+
+
+```
+
+AddJob.js
+
+```js
+import { clearValues, handleChange } from '../../features/job/jobSlice';
+
+return (
+  <button
+    type="button"
+    className="btn btn-block clear-btn"
+    onClick={() => dispatch(clearValues())}
+  >
+    clear
+  </button>
+);
+```
