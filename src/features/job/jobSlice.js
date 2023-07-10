@@ -47,7 +47,10 @@ const jobSlice = createSlice({
   initialState,
   reducers: {
     clearValues: () => {
-      return initialState;
+      return {
+        ...initialState,
+        jobLocation: getUserFromLocalStorage()?.location || '',
+      };
     },
 
     handleChange: (state, { payload: { name, value } }) => {

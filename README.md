@@ -1851,9 +1851,7 @@ const handleJobInput = (e) => {
 
     // reducers
     clearValues: () => {
-      return {
-        ...initialState
-      };
+
       return initialState
     },
 
@@ -1946,4 +1944,32 @@ const handleSubmit = (e) => {
 
   dispatch(createJob({ position, company, jobLocation, jobType, status }));
 };
+```
+
+#### 56) Use Existing User Location
+
+AddJob.js
+
+```js
+const { user } = useSelector((store) => store.user);
+
+useEffect(() => {
+  // eventually will check for isEditing
+  if (!isEditing) {
+    dispatch(handleChange({ name: 'jobLocation', value: user.location }));
+  }
+}, [dispatch, user]);
+```
+
+jobSlice.js
+
+```js
+
+    // reducers
+    clearValues: () => {
+      return {
+        ...initialState,
+        jobLocation: getUserFromLocalStorage()?.location || '',
+      };
+    },
 ```
