@@ -28,7 +28,7 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (user, thunkAPI) => {
-    return loginUserThunk('/auth/loginUser', user, thunkAPI);
+    return loginUserThunk('/auth/login', user, thunkAPI);
   }
 );
 
@@ -44,11 +44,13 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    logoutUser: (state) => {
+    logoutUser: (state, { payload }) => {
       state.user = null;
       state.isSidebarOpen = false;
-      toast.success('Logout Successful!');
       removeUserFromLocalStorage();
+      if (payload) {
+        toast.success(payload);
+      }
     },
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
