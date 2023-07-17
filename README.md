@@ -2314,3 +2314,23 @@ Job.js
 ```js
 const date = moment(createdAt).format('MMM Do, YYYY');
 ```
+
+#### 65) Toggle Loading in AllJobs
+
+allJobsSlice.js
+
+```js
+reducers: {
+    showLoading: (state) => {
+      state.isLoading = true;
+    },
+    hideLoading: (state) => {
+      state.isLoading = false;
+    },
+}
+export const {
+  showLoading,
+  hideLoading,
+} = allJobsSlice.actions;
+
+```
