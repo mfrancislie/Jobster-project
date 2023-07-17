@@ -8,27 +8,27 @@ const JobsContainer = () => {
   const { jobs, isLoading } = useSelector((store) => store.allJobs);
   const dispatch = useDispatch();
 
-  // if (isLoading) {
-  //   return <Loading center />;
-  // }
-
-  // if (jobs.length === 0) {
-  //   return (
-  //     <Wrapper>
-  //       <h1>No Jobs Display!</h1>;
-  //     </Wrapper>
-  //   );
-  // }
-
   useEffect(() => {
     dispatch(getAllJobs());
   }, [dispatch]);
 
+  if (isLoading) {
+    return <Loading center />;
+  }
+
+  if (jobs.length === 0) {
+    return (
+      <Wrapper>
+        <h1>No Jobs Display!</h1>;
+      </Wrapper>
+    );
+  }
+
   return (
     <Wrapper>
       <h1>Jobs Info</h1>
-      {isLoading && <Loading center />}
-      {jobs.length === 0 && <Loading center />}
+      {/* {isLoading && <Loading center />}
+      {jobs.length === 0 && <Loading center />} */}
       <div className="jobs">
         {jobs.map((job) => (
           <Job key={job._id} {...job} />
