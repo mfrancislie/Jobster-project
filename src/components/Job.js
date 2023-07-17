@@ -1,7 +1,8 @@
 import React from 'react';
 import Wrapper from '../assets/wrappers/Job';
 import { Link } from 'react-router-dom';
-
+import JobInfo from './JobInfo';
+import { FaLocationArrow, FaCalendarAlt, FaBriefcase } from 'react-icons/fa';
 const Job = ({
   _id,
   position,
@@ -11,6 +12,7 @@ const Job = ({
   createdAt,
   status,
 }) => {
+  const date = createdAt;
   return (
     <Wrapper>
       <header>
@@ -22,7 +24,9 @@ const Job = ({
       </header>
       <div className="content">
         <div className="content-center">
-          <h4>more content</h4>
+          <JobInfo icon={<FaLocationArrow />} text={jobLocation} />
+          <JobInfo icon={<FaCalendarAlt />} text={date} />
+          <JobInfo icon={<FaBriefcase />} text={jobType} />
           <div className={`status ${status}`}>{status}</div>
         </div>
         <footer>
