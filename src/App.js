@@ -13,7 +13,7 @@ import {
 function App() {
   return (
     <BrowserRouter>
-      <ToastContainer position="top-center" />
+      <ToastContainer position="top-right" />
       <Routes>
         <Route
           path="/"

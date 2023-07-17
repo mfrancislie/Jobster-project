@@ -2429,3 +2429,73 @@ useEffect(() => {
   }
 }, []);
 ```
+
+#### 68) EditJob Request
+
+- PATCH /jobs/jobId
+- { position:'position', company:'company', jobLocation:'location', jobType:'full-time', status:'pending' }
+- authorization header : 'Bearer token'
+- sends back the updated job object
+
+jobSlice.js
+
+```js
+export const editJob = createAsyncThunk(
+  'job/editJob',
+  async ({ jobId, job }, thunkAPI) => {
+    try {
+      const resp = await customFetch.patch(`/jobs/${jobId}`, job, {
+        headers: {
+          authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
+        },
+      });
+      thunkAPI.dispatch(clearValues());
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+
+extraReducers:{
+  [editJob.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [editJob.fulfilled]: (state) => {
+      state.isLoading = false;
+      toast.success('Job Modified...');
+    },
+    [editJob.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
+}
+```
+
+AddJob.js
+
+```js
+import {
+  clearValues,
+  handleChange,
+  createJob,
+  editJob,
+} from '../../features/job/jobSlice';
+
+if (isEditing) {
+  dispatch(
+    editJob({
+      jobId: editJobId,
+      job: {
+        position,
+        company,
+        jobLocation,
+        jobType,
+        status,
+      },
+    })
+  );
+  return;
+}
+```
