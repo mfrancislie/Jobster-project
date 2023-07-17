@@ -2378,3 +2378,54 @@ Job.js
   Delete
 </button>
 ```
+
+#### 67) SetEditJob Reducer
+
+jobSlice.js
+
+```js
+reducers:{
+
+  setEditJob: (state, { payload }) => {
+    return { ...state, isEditing: true, ...payload };
+    },
+  }
+
+  export const { handleChange, clearValues, setEditJob } = jobSlice.actions;
+
+```
+
+Job.js
+
+```js
+import { setEditJob, deleteJob } from '../features/job/jobSlice';
+
+<Link
+  to="/add-job"
+  className="btn edit-btn"
+  onClick={() => {
+    dispatch(
+      setEditJob({
+        editJobId: _id,
+        position,
+        company,
+        jobLocation,
+        jobType,
+        status,
+      })
+    );
+  }}
+>
+  Edit
+</Link>;
+```
+
+AddJob.js
+
+```js
+useEffect(() => {
+  if (!isEditing) {
+    dispatch(handleChange({ name: 'jobLocation', value: user.location }));
+  }
+}, []);
+```
