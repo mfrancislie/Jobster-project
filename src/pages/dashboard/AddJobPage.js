@@ -43,8 +43,10 @@ const AddJobPage = () => {
   };
 
   useEffect(() => {
-    dispatch(handleChange({ name: 'jobLocation', value: user.location }));
-  }, [dispatch, user]);
+    if (!isEditing) {
+      dispatch(handleChange({ name: 'jobLocation', value: user.location }));
+    }
+  }, [dispatch, isEditing, user]);
   return (
     <Wrapper>
       <form className="form">
