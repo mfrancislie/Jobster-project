@@ -2300,3 +2300,17 @@ const date = createdAt
   <div className={`status ${status}`}>{status}</div>
 </div>
 ```
+
+#### 64) Moment.js
+
+[moment.js](https://momentjs.com/)
+
+```sh
+npm install moment
+```
+
+Job.js
+
+```js
+const date = moment(createdAt).format('MMM Do, YYYY');
+```

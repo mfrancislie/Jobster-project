@@ -3,6 +3,7 @@ import Wrapper from '../assets/wrappers/Job';
 import { Link } from 'react-router-dom';
 import JobInfo from './JobInfo';
 import { FaLocationArrow, FaCalendarAlt, FaBriefcase } from 'react-icons/fa';
+import moment from 'moment/moment';
 const Job = ({
   _id,
   position,
@@ -12,7 +13,7 @@ const Job = ({
   createdAt,
   status,
 }) => {
-  const date = createdAt;
+  const date = moment(createdAt).format('MMM Do, YYYY');
   return (
     <Wrapper>
       <header>
