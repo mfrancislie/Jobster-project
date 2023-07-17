@@ -2126,7 +2126,7 @@ export default JobsContainer;
 
 [CSS Only Loading Spinner](https://youtu.be/DqqZEpctZ8w)
 
-Loading.js
+create component Loading.js 
 
 ```js
 const Loading = ({ center }) => {
@@ -2144,4 +2144,60 @@ import Loading from './Loading';
 if (isLoading) {
   return <Loading center />;
 }
+```
+
+#### 61) GetAllJobs Request
+
+- GET /jobs
+- authorization header : 'Bearer token'
+- returns {jobs:[],totalJobs:number, numOfPages:number }
+
+allJobsSlice.js
+
+```js
+export const getAllJobs = createAsyncThunk(
+  'allJobs/getJobs',
+  async (_, thunkAPI) => {
+    let url = `/jobs`;
+
+    try {
+      const resp = await customFetch.get(url, {
+        headers: {
+          authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
+        },
+      });
+
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+// extra reducers
+
+extraReducers: {
+    [getAllJobs.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getAllJobs.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.jobs = payload.jobs;
+    },
+    [getAllJobs.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
+}
+
+```
+
+JobsContainer.js
+
+```js
+import { getAllJobs } from '../features/allJobs/allJobsSlice';
+
+useEffect(() => {
+  dispatch(getAllJobs());
+}, []);
 ```
