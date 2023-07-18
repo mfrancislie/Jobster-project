@@ -2590,3 +2590,25 @@ export const createJobThunk = async (job, thunkAPI) => {
 };
 
 ```
+
+#### 70) AuthHeader - Utils Approach
+
+- create utils/authHeader.js
+
+```js
+const authHeader = (thunkAPI) => {
+  return {
+    headers: {
+      authorization: `Bearer ${thunkAPI.getState().user.user.token}`,
+    },
+  };
+};
+
+export default authHeader;
+```
+
+jobThunk.js
+
+```js
+import authHeader from '../../utils/authHeader';
+````
