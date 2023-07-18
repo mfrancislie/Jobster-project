@@ -12,6 +12,9 @@ import StatsContainer from './StatsContainer';
 import ChartsContainer from './ChartsContainer';
 import Loading from './Loading';
 import StatItem from './StatItem';
+import AreaChart from './AreaChart';
+import BarChart from './BarChart';
+
 export {
   Logo,
   FormRow,
@@ -27,4 +30,6 @@ export {
   ChartsContainer,
   Loading,
   StatItem,
+  AreaChart,
+  BarChart,
 };
