@@ -2657,8 +2657,8 @@ Register.js
 
 ```js
 <button
-  type='button'
-  className='btn btn-block btn-hipster'
+  type="button"
+  className="btn btn-block btn-hipster"
   disabled={isLoading}
   onClick={() => {
     dispatch(loginUser({ email: 'testUser@test.com', password: 'secret' }));
@@ -2666,4 +2666,48 @@ Register.js
 >
   {isLoading ? 'loading...' : 'demo'}
 </button>
+```
+
+#### 74) Get Stats Request
+
+- GET /jobs/stats
+- authorization header : 'Bearer token'
+- returns
+  {
+  defaultStats:{pending:24,interview:27,declined:24},
+  monthlyApplications:[{date:"Nov 2021",count:5},{date:"Dec 2021",count:4} ]
+  }
+- last six months
+
+  allJobsSlice.js
+
+```js
+export const showStats = createAsyncThunk(
+  'allJobs/showStats',
+  async (_, thunkAPI) => {
+    try {
+      const resp = await customFetch.get('/jobs/stats');
+      console.log(resp.data));
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+// extraReducers
+
+    [showStats.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [showStats.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.stats = payload.defaultStats;
+      state.monthlyApplications = payload.monthlyApplications;
+    },
+    [showStats.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
+
 ```

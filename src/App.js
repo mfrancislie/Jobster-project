@@ -23,10 +23,10 @@ function App() {
             </ProtectedRoute>
           }
         >
+          <Route index element={<StatsPage />} />
           <Route path="add-Job" element={<AddJobPage />} />
           <Route path="all-Jobs" element={<AllJobsPage />} />
           <Route path="profile" element={<ProfilePage />} />
-          <Route path="stats" element={<StatsPage />} />
         </Route>
         <Route path="landing" element={<LandingPage />} />
         <Route path="register" element={<RegisterPage />} />
