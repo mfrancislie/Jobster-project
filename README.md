@@ -2956,42 +2956,42 @@ const SearchContainer = () => {
   };
   return (
     <Wrapper>
-      <form className='form'>
+      <form className="form">
         <h4>search form</h4>
-        <div className='form-center'>
+        <div className="form-center">
           {/* search position */}
 
           <FormRow
-            type='text'
-            name='search'
+            type="text"
+            name="search"
             value={search}
             handleChange={handleSearch}
           />
           {/* search by status */}
           <FormRowSelect
-            labelText='status'
-            name='searchStatus'
+            labelText="status"
+            name="searchStatus"
             value={searchStatus}
             handleChange={handleSearch}
             list={['all', ...statusOptions]}
           />
           {/* search by type */}
           <FormRowSelect
-            labelText='type'
-            name='searchType'
+            labelText="type"
+            name="searchType"
             value={searchType}
             handleChange={handleSearch}
             list={['all', ...jobTypeOptions]}
           />
           {/* sort */}
           <FormRowSelect
-            name='sort'
+            name="sort"
             value={sort}
             handleChange={handleSearch}
             list={sortOptions}
           />
           <button
-            className='btn btn-block btn-danger'
+            className="btn btn-block btn-danger"
             disabled={isLoading}
             onClick={handleSubmit}
           >
@@ -3004,4 +3004,38 @@ const SearchContainer = () => {
 };
 
 export default SearchContainer;
+```
+
+#### 83) Handle Change and Clear Filters
+
+allJobsSlice.js
+
+```js
+reducers:{
+  handleChange: (state, { payload: { name, value } }) => {
+      // state.page = 1;
+      state[name] = value;
+    },
+    clearFilters: (state) => {
+      return { ...state, ...initialFiltersState };
+    },
+}
+
+export const { showLoading, hideLoading, handleChange, clearFilters } =
+  allJobsSlice.actions;
+```
+
+SearchContainer.js
+
+```js
+import { handleChange, clearFilters } from '../features/allJobs/allJobsSlice';
+
+const handleSearch = (e) => {
+  if (isLoading) return;
+  dispatch(handleChange({ name: e.target.name, value: e.target.value }));
+};
+const handleSubmit = (e) => {
+  e.preventDefault();
+  dispatch(clearFilters());
+};
 ```
