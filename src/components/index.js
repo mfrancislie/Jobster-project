@@ -11,6 +11,7 @@ import SearchContainer from './SearchContainer';
 import StatsContainer from './StatsContainer';
 import ChartsContainer from './ChartsContainer';
 import Loading from './Loading';
+import StatItem from './StatItem';
 export {
   Logo,
   FormRow,
@@ -25,4 +26,5 @@ export {
   StatsContainer,
   ChartsContainer,
   Loading,
+  StatItem,
 };
