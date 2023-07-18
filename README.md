@@ -2851,3 +2851,25 @@ const ChartsContainer = () => {
 
 export default ChartsContainer;
 ```
+
+#### 79) Recharts Library
+
+[Recharts](https://recharts.org)
+
+```sh
+npm install recharts
+```
+
+- For not work with React 18
+
+```sh
+npm install react@17 react-dom@17
+```
+
+```sh
+npm install recharts
+```
+
+```sh
+npm install react@18 react-dom@18
+```
