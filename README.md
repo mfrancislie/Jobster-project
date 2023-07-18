@@ -2645,3 +2645,25 @@ export default customFetch;
 
 - remove auth header
 ````
+
+#### 73) Test User
+
+- email : testUser@test.com
+- password : secret
+- read only!
+- dummy data
+
+Register.js
+
+```js
+<button
+  type='button'
+  className='btn btn-block btn-hipster'
+  disabled={isLoading}
+  onClick={() => {
+    dispatch(loginUser({ email: 'testUser@test.com', password: 'secret' }));
+  }}
+>
+  {isLoading ? 'loading...' : 'demo'}
+</button>
+```
