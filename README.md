@@ -3103,6 +3103,7 @@ return (
 <HiChevronDoubleLeft />
 prev
 </button>
+
 <div className='btn-container'>
 {pages.map((pageNumber) => {
 return (
@@ -3166,11 +3167,11 @@ const prevPage = () => {
 };
 
 return (
-  <div className='btn-container'>
+  <div className="btn-container">
     {pages.map((pageNumber) => {
       return (
         <button
-          type='button'
+          type="button"
           className={pageNumber === page ? 'pageBtn active' : 'pageBtn'}
           key={pageNumber}
           onClick={() => dispatch(changePage(pageNumber))}
@@ -3226,4 +3227,25 @@ useEffect(() => {
   dispatch(getAllJobs());
   // eslint-disable-next-line
 }, [page, search, searchStatus, searchType, sort]);
+```
+
+#### 88) Change Page and isLoading
+
+allJobsSlice.js
+
+```js
+reducers:{
+  handleChange: (state, { payload: { name, value } }) => {
+      state.page = 1;
+      state[name] = value;
+    },
+```
+
+SearchContainer.js
+
+```js
+const handleSearch = (e) => {
+  if (isLoading) return;
+  dispatch(handleChange({ name: e.target.name, value: e.target.value }));
+};
 ```
