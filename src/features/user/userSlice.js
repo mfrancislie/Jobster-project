@@ -9,6 +9,7 @@ import {
   loginUserThunk,
   registerUserThunk,
   updateUserThunk,
+  clearStoreThunk,
 } from './userThunk';
 
 const initialState = {
@@ -40,6 +41,8 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+export const clearStore = createAsyncThunk('user/clearStore', clearStoreThunk);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -59,6 +62,10 @@ const userSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
+
+      .addCase(clearStore.rejected, () => {
+        toast.error('There was an error');
+      })
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
