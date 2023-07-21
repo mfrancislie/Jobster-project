@@ -3359,3 +3359,162 @@ return (
   </button>
 );
 ```
+
+#### 92) UnAuthorized Requests
+
+axios.js
+
+```js
+import { clearStore } from '../features/user/userSlice';
+
+export const checkForUnauthorizedResponse = (error, thunkAPI) => {
+  if (error.response.status === 401) {
+    thunkAPI.dispatch(clearStore());
+    return thunkAPI.rejectWithValue('Unauthorized! Logging Out...');
+  }
+  return thunkAPI.rejectWithValue(error.response.data.msg);
+};
+```
+
+allJobsThunk.js
+
+```js
+import customFetch, { checkForUnauthorizedResponse } from '../../utils/axios';
+
+export const showStatsThunk = async (_, thunkAPI) => {
+  try {
+    const resp = await customFetch.get('/jobs/stats');
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+```
+
+- refactor in all authenticated requests
+
+#### Refactor All Extra Reducers to Builder Callback Notation
+
+allJobsSlice.js
+
+```js
+ extraReducers: (builder) => {
+    builder
+      .addCase(getAllJobs.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllJobs.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.jobs = payload.jobs;
+        state.numOfPages = payload.numOfPages;
+        state.totalJobs = payload.totalJobs;
+      })
+      .addCase(getAllJobs.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      })
+      .addCase(showStats.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(showStats.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.stats = payload.defaultStats;
+        state.monthlyApplications = payload.monthlyApplications;
+      })
+      .addCase(showStats.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      });
+  },
+```
+
+jobSlice.js
+
+```js
+extraReducers: (builder) => {
+    builder
+      .addCase(createJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createJob.fulfilled, (state) => {
+        state.isLoading = false;
+        toast.success('Job Created');
+      })
+      .addCase(createJob.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      })
+      .addCase(deleteJob.fulfilled, (state, { payload }) => {
+        toast.success(payload);
+      })
+      .addCase(deleteJob.rejected, (state, { payload }) => {
+        toast.error(payload);
+      })
+      .addCase(editJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editJob.fulfilled, (state) => {
+        state.isLoading = false;
+        toast.success('Job Modified...');
+      })
+      .addCase(editJob.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      });
+  },
+```
+
+userSlice.js
+
+```js
+ extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, { payload }) => {
+        const { user } = payload;
+        state.isLoading = false;
+        state.user = user;
+        addUserToLocalStorage(user);
+        toast.success(`Hello There ${user.name}`);
+      })
+      .addCase(registerUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, { payload }) => {
+        const { user } = payload;
+        state.isLoading = false;
+        state.user = user;
+        addUserToLocalStorage(user);
+
+        toast.success(`Welcome Back ${user.name}`);
+      })
+      .addCase(loginUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        const { user } = payload;
+        state.isLoading = false;
+        state.user = user;
+        addUserToLocalStorage(user);
+
+        toast.success(`User Updated!`);
+      })
+      .addCase(updateUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      })
+      .addCase(clearStore.rejected, () => {
+        toast.error('There was an error..');
+      });
+  },
+```
