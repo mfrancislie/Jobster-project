@@ -3518,3 +3518,41 @@ userSlice.js
       });
   },
 ```
+
+#### Switch To Local Search
+
+- remove isLoading from handleSearch
+- import useState and useMemo from react
+- setup localSearch state value
+- replace search input functionality so it updates localSearch
+
+```js
+import { useState, useMemo } from 'react';
+
+const SearchContainer = () => {
+  const [localSearch, setLocalSearch] = useState('');
+
+  const handleSearch = (e) => {
+    dispatch(handleChange({ name: e.target.name, value: e.target.value }));
+  };
+
+  return (
+    <Wrapper>
+      <form className="form">
+        <h4>search form</h4>
+        <div className="form-center">
+          {/* search position */}
+          <FormRow
+            type="text"
+            name="search"
+            value={localSearch}
+            handleChange={(e) => setLocalSearch(e.target.value)}
+          />
+          // ...rest of the code
+        </div>
+      </form>
+    </Wrapper>
+  );
+};
+export default SearchContainer;
+```
